@@ -1,0 +1,9 @@
+
+#ifndef RUNPLUGIN_CONFIG_H
+#define RUNPLUGIN_CONFIG_H
+
+#define PLUGIN_LIBRARY "libstreamchecker.so"
+#cmakedefine CMAKE_TEMP_LIBRARY_PATH "@CMAKE_TEMP_LIBRARY_PATH@"
+#cmakedefine LLVM_LIBRARY_DIRS "@LLVM_LIBRARY_DIRS@"
+
+#endif
