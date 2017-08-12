@@ -2,7 +2,7 @@
 #ifndef RUNPLUGIN_CONFIG_H
 #define RUNPLUGIN_CONFIG_H
 
-#define PLUGIN_LIBRARY "libstreamchecker.so"
+#define PLUGIN_LIBRARY "libstreamchecker@CMAKE_SHARED_LIBRARY_SUFFIX@"
 #cmakedefine CMAKE_TEMP_LIBRARY_PATH "@CMAKE_TEMP_LIBRARY_PATH@"
 #cmakedefine LLVM_LIBRARY_DIRS "@LLVM_LIBRARY_DIRS@"
 
