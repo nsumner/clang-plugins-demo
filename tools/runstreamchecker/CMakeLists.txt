@@ -1,5 +1,17 @@
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" 
-               "${CMAKE_CURRENT_BINARY_DIR}/config.h" @ONLY
+
+file(GENERATE
+     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/config.h"
+     CONTENT
+"
+#ifndef RUNPLUGIN_CONFIG_H
+#define RUNPLUGIN_CONFIG_H
+
+#define PLUGIN_LIBRARY \"$<TARGET_FILE_NAME:streamchecker>\"
+#define CMAKE_TEMP_LIBRARY_PATH \"${CMAKE_TEMP_LIBRARY_PATH}\"
+#define LLVM_LIBRARY_DIRS \"${LLVM_LIBRARY_DIRS}\"
+
+#endif
+"
 )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
