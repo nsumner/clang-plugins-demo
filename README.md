@@ -71,11 +71,11 @@ To load and run a static analyzer plugin dynamically in clang, use:
 
         clang -fsyntax-only -fplugin=lib/libstreamchecker.so \
           -Xclang -analyze -Xclang -analyzer-checker=demo.streamchecker \
-          ../test/files.c
+          ../clang-plugins-demo/test/files.c
 
 To run the plugin via the standalone program:
 
-        bin/runstreamchecker -- clang -c ../test/files.c
+        bin/runstreamchecker -- clang -c ../clang-plugins-demo/test/files.c
 
 Again, missing headers are likely, and using a compilation database is the
 preferred and simplest way to work around this issue. Note that clang comes
