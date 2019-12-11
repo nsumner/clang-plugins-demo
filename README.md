@@ -1,3 +1,7 @@
+NOTE: This project should presently be considered deprecated.
+Clang has changed substantially since it was written, and this repo needs
+to be update. With luck that will happen soon.
+
 These plugins and programs are demonstrations of how to create and use the
 plugin infrastructure of clang for analyzing ASTs or integrating with the
 clang static analyzer.
