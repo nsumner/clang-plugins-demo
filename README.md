@@ -1,7 +1,3 @@
-NOTE: This project should presently be considered deprecated.
-Clang has changed substantially since it was written, and this repo needs
-to be update. With luck that will happen soon.
-
 These plugins and programs are demonstrations of how to create and use the
 plugin infrastructure of clang for analyzing ASTs or integrating with the
 clang static analyzer.
@@ -10,6 +6,8 @@ The AST plugin prints out the names of functions found when parsing a file.
 The static analyzer plugin is the SimpleStreamChecker from the clang code
 base (as well as [How to write a checker in 24 hours][0] by Anna Zaks and
 Jordan Rose). It identifies issues in handling `FILE`s in C program.
+Neither plugin is a contribution here. This project just provides an example
+of how to integrate such plugins into a standalone project.
 
 Building with CMake
 ==============================================
