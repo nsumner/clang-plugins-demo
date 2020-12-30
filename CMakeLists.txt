@@ -1,15 +1,19 @@
 project(clang-plugins-demo)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.12)
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/")
 list(APPEND CMAKE_MODULE_PATH "${LLVM_DIR}")
 
 set(PACKAGE_NAME clang-plugins-demo)
-set(PACKAGE_VERSION 0.1)
+set(PACKAGE_VERSION 0.2)
 set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
 set(PACKAGE_BUGREPORT "wsumner@sfu.ca")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++14 -fno-rtti -fno-omit-frame-pointer")
+add_compile_options(
+  "$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-fno-rtti;-Wall>"
+  "$<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:DEBUG>>:-fno-omit-frame-pointer>"
+)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
@@ -26,12 +30,6 @@ message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
 include(AddLLVM)
 
-option(LLVM_ENABLE_CXX1Y  "Enable C++1Y" ON)
-option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." ON)
-option(LLVM_ENABLE_PLUGINS "Generate build targets for LLVM plugins." ON)
-option(LLVM_BUILD_TOOLS
-  "Build the LLVM tools. If OFF, just generate build targets." ON)
-
 # LLVM_DIR must be set to the prefix of /share/llvm/cmake via commandline
 find_package(Clang REQUIRED)
 
@@ -39,7 +37,8 @@ message("LLVM STATUS:
   Definitions ${LLVM_DEFINITIONS}
   Includes    ${LLVM_INCLUDE_DIRS}
               ${CLANG_INCLUDE_DIRS}
-  Libraries   ${LLVM_LIBRARY_DIRS}")
+  Libraries   ${LLVM_LIBRARY_DIRS}"
+)
 
 # Now set the LLVM header and library paths:
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS} ${CLANG_INCLUDE_DIRS})

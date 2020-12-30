@@ -8,6 +8,7 @@
 #include "clang/Frontend/FrontendActions.h"
 #include "clang/Tooling/Tooling.h"
 
+#include <memory>
 
 namespace printfunctions {
 
@@ -20,7 +21,7 @@ public:
   std::unique_ptr<clang::ASTConsumer>
   CreateASTConsumer(clang::CompilerInstance &ci, llvm::StringRef) override {
     ci.getDiagnostics().setClient(new clang::IgnoringDiagConsumer());
-    return llvm::make_unique<clang::ASTConsumer>();
+    return std::make_unique<clang::ASTConsumer>();
   }
 
   bool

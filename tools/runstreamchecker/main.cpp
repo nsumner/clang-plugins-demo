@@ -138,8 +138,8 @@ protected:
     auto& diags = ci.getDiagnostics();
     diags.setClient(new FilteringDiagConsumer{diags.takeClient()});
     auto analyzerOpts = ci.getAnalyzerOpts();
-    analyzerOpts->CheckersControlList.clear();
-    analyzerOpts->CheckersControlList.push_back({CHECKER_PLUGIN_NAME, true});
+    analyzerOpts->CheckersAndPackages.clear();
+    analyzerOpts->CheckersAndPackages.push_back({CHECKER_PLUGIN_NAME, true});
     auto &plugins = ci.getFrontendOpts().Plugins;
     plugins.push_back(getPluginPath());
     return clang::ento::AnalysisAction::CreateASTConsumer(ci, inFile);
@@ -170,7 +170,7 @@ processFile(clang::tooling::CompilationDatabase const &database,
   tool.appendArgumentsAdjuster(clang::tooling::getClangStripOutputAdjuster());
 
   const char* SYSTEM_INCLUDES =
-    "-I" LLVM_LIBRARY_DIRS "/clang/4.0.0/include/";
+    "-I" LLVM_LIBRARY_DIRS "/clang/11.0.0/include/";
   clang::tooling::CommandLineArguments include{SYSTEM_INCLUDES};
   auto includeInserter = clang::tooling::getInsertArgumentAdjuster(include,
     clang::tooling::ArgumentInsertPosition::BEGIN);

@@ -5,6 +5,7 @@
 
 
 constexpr const char * CHECKER_PLUGIN_NAME = "demo.streamchecker";
+constexpr const char * CHECKER_PLUGIN_DOCS_URI = "demo.streamchecker.nonexistent";
 
 
 #endif

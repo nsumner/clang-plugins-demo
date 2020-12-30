@@ -27,53 +27,75 @@ llvm_map_components_to_libnames(REQ_LLVM_LIBRARIES ${LLVM_TARGETS_TO_BUILD}
                                 core support option
 )
 
+# NOTE: The order here was determined by configuring a build of clang with CMake
+# and extracting the ordering from `libclang/CMakeFiles/libclang.dir/link.txt`
 target_link_libraries(runstreamchecker
-  clangAST
-  clangBasic
-  clangLex
-  clangParse
-  clangAnalysis
-  clangDriver
-  clangFrontend
-  clangASTMatchers
-  clangRewriteFrontend
-  clangRewrite
-  clangStaticAnalyzerFrontend
-  clangStaticAnalyzerCheckers
-  clangStaticAnalyzerCore
-  clangEdit
-  clangSerialization
-  clangTooling
-  clangParse
-  clangSema
-  clangAST
-  ${REQ_LLVM_LIBRARIES}
+  PRIVATE
+    clangAST
+    clangBasic
+    clangDriver
+    clangFrontend
+    clangIndex
+    clangLex
+    clangSema
+    clangSerialization
+    clangTooling
+
+    clangFormat
+    clangToolingInclusions
+    clangToolingCore
+    clangFrontend
+    clangDriver
+
+    clangRewriteFrontend
+    clangStaticAnalyzerFrontend
+    clangCrossTU
+    clangStaticAnalyzerCheckers
+    clangStaticAnalyzerCore
+    clangAST
+
+    clangParse
+    clangSerialization
+    clangSema
+    clangEdit
+    clangRewrite
+    clangAnalysis
+    clangASTMatchers
+    clangAST
+    clangLex
+    clangBasic
+
+    ${REQ_LLVM_LIBRARIES}
 )
 
 target_include_directories(runstreamchecker
-  PRIVATE $<TARGET_PROPERTY:streamchecker,INTERFACE_INCLUDE_DIRECTORIES>
+  PRIVATE
+    $<TARGET_PROPERTY:streamchecker,INTERFACE_INCLUDE_DIRECTORIES>
 )
 
 # Platform dependencies.
 if( WIN32 )
   find_library(SHLWAPI_LIBRARY shlwapi)
   target_link_libraries(runstreamchecker
-    ${SHLWAPI_LIBRARY}
+    PRIVATE
+      ${SHLWAPI_LIBRARY}
   )
 else()
   find_package(Threads REQUIRED)
   find_package(Curses REQUIRED)
   target_link_libraries(runstreamchecker
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${CMAKE_DL_LIBS}
-    ${CURSES_LIBRARIES}
+    PRIVATE
+      ${CMAKE_THREAD_LIBS_INIT}
+      ${CMAKE_DL_LIBS}
+      ${CURSES_LIBRARIES}
   )
 endif()
 
+
 set_target_properties(runstreamchecker
-                      PROPERTIES
-                      LINKER_LANGUAGE CXX
-                      PREFIX ""
+  PROPERTIES
+  LINKER_LANGUAGE CXX
+  PREFIX ""
 )
 
 install(TARGETS runstreamchecker
